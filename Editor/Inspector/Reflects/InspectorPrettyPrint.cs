@@ -28,10 +28,12 @@ namespace Inspector
                 return true;
             }
 
-            if (value is float f)
             {
-                str = f.ToString(FloatStyle);
-                return true;
+                if (value is float f)
+                {
+                    str = f.ToString(FloatStyle);
+                    return true;
+                }
             }
 
             {

@@ -120,7 +120,19 @@ namespace Inspector
             EditorGUILayout.BeginHorizontal(GUILayout.ExpandWidth(false));
             GUI.SetNextControlName("foldout" + RuntimeHelpers.GetHashCode(value));
             active = EditorGUILayout.Foldout(expand, labelName, true);
-            EditorGUILayout.LabelField(type.TypeName, window.Style_ExpandLabel);
+
+            if (value is Color color)
+            {
+                var oldColor = GUI.color;
+                GUI.color = color;
+                EditorGUILayout.LabelField($"Color({color.r:0.###}, {color.g:0.###}, {color.b:0.###}, {color.a:0.###})", window.Style_ExpandLabel);
+                GUI.color = oldColor;
+            }
+            else
+            {
+                EditorGUILayout.LabelField(type.TypeName, window.Style_ExpandLabel);
+            }
+            
             EditorGUILayout.EndHorizontal();
 
             if (!expand)
