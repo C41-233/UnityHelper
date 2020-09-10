@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -45,5 +46,16 @@ namespace Inspector
             return false;
         }
 
+        public static bool TryGetCount(object host, out int count)
+        {
+            if (host is ICollection collection)
+            {
+                count = collection.Count;
+                return true;
+            }
+
+            count = 0;
+            return false;
+        }
     }
 }

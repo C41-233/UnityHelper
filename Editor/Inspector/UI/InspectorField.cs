@@ -209,7 +209,14 @@ namespace Inspector
             
             EditorGUILayout.BeginHorizontal(GUILayout.ExpandWidth(false));
             active = EditorGUILayout.Foldout(active, labelName, true);
-            EditorGUILayout.LabelField($"{enumerableType.TypeName}", window.Style_ExpandLabel);
+            if (InspectorReflect.TryGetCount(enumerable, out var count))
+            {
+                EditorGUILayout.LabelField($"{enumerableType.TypeName}{{{count}}}", window.Style_ExpandLabel);
+            }
+            else
+            {
+                EditorGUILayout.LabelField($"{enumerableType.TypeName}", window.Style_ExpandLabel);
+            }
             EditorGUILayout.EndHorizontal();
             
             if (!expand)
