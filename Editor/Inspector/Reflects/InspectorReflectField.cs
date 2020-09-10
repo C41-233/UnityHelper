@@ -1,7 +1,6 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using JetBrains.Annotations;
 
 namespace Inspector
 {
@@ -16,7 +15,7 @@ namespace Inspector
         
         public InspectorReflectType Type { get; }
         
-        public InspectorReflectField([CanBeNull] FieldInfo field)
+        public InspectorReflectField(FieldInfo field)
         {
             Name = InspectorReflect.NormalizeName(field.Name);
             
