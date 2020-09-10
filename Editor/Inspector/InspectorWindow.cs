@@ -145,7 +145,8 @@ namespace Inspector
         {
             var style = new GUIStyle(GUI.skin.label)
             {
-                fontStyle = FontStyle.Bold
+                fontStyle = FontStyle.Bold,
+                wordWrap = true,
             };
             
             var mp = Event.current.mousePosition;
@@ -167,7 +168,7 @@ namespace Inspector
                 y = 0;
             }
 
-            var rect = new Rect(x, y,  width,  height);
+            var rect = new Rect(x, y, width, height);
             
             GUI.DrawTexture(rect, tooltipBackground);
             GUI.color = Color.white;
@@ -177,7 +178,7 @@ namespace Inspector
         private string CalculateSize(string value, out float width, out float height)
         {
             const float W = 7.6f;
-            const float H = 16.3f;
+            const float H = 20f;
 
             var c_per_line = Math.Max((int) (position.width / W), 5);
             
@@ -202,7 +203,10 @@ namespace Inspector
                     sb.Append(token[i]);
                 }
 
-                sb.Append('\n');
+                if (row > 0)
+                {
+                    sb.Append('\n');
+                }
                 row++;
             }
             width = Math.Min(col * W, position.width);
