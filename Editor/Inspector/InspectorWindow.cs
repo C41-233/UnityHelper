@@ -175,14 +175,16 @@ namespace Inspector
             GUI.Label(rect, str, style);
         }
         
+        private static readonly StringBuilder StringBuilder = new StringBuilder();
+
         private string CalculateSize(string value, out float width, out float height)
         {
-            const float W = 7.6f;
+            const float W = 7.2f;
             const float H = 20f;
 
             var c_per_line = Math.Max((int) (position.width / W), 5);
             
-            var sb = new StringBuilder();
+            var sb = StringBuilder;
             var tokens = value.Split('\n');
 
             var col = 0;
@@ -212,7 +214,9 @@ namespace Inspector
             width = Math.Min(col * W, position.width);
             height = row * H;
             
-            return sb.ToString();
+            var r = sb.ToString();
+            sb.Clear();
+            return r;
         }
 
     }

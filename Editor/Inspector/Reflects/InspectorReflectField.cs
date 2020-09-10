@@ -51,7 +51,7 @@ namespace Inspector
                         Expression.Convert(parameter, field.DeclaringType), 
                         field
                     ),
-                typeof(object)
+                    typeof(object)
                 ),
                 parameter
             ).Compile();

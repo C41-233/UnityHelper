@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
 
@@ -29,8 +30,8 @@ namespace Inspector
                 DirectDraw(labelName, str);
                 return;
             }
-             if (value is IEnumerable enumerable)
-             {
+            if (value is IEnumerable enumerable)
+            {
                  if (type.RuntimeType.IsArray)
                  {
                      DrawList(labelName, enumerable, type, type.ElementType);
@@ -66,17 +67,37 @@ namespace Inspector
                          return;
                      }
                  }
-             }
+            }
 
-             DrawObject(labelName, value, type);
+            DrawObject(labelName, value, type);
         }
 
         private void DirectDraw(GUIContent labelName, string value)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(labelName, window.Style_DirectLabel);
-            EditorGUILayout.LabelField(value);
+            EditorGUILayout.LabelField(FilterLabelString(value));
             EditorGUILayout.EndHorizontal();
+        }
+
+        private static readonly StringBuilder StringBuilder = new StringBuilder();
+
+        private static string FilterLabelString(string value)
+        {
+            var sb = StringBuilder;
+            foreach (var ch in value)
+            {
+                switch (ch)
+                {
+                    case '\n': sb.Append(@"\n"); break;
+                    case '\r': sb.Append(@"\r"); break;
+                    default: sb.Append(ch); break;
+                }   
+            }
+
+            var r = sb.ToString();
+            sb.Clear();
+            return r;
         }
 
         private bool active;
